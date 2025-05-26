@@ -1,0 +1,83 @@
+#include <SCServo.h>
+#include <WiFi.h>
+
+// definisem sifru i ime wifi mreze
+const char* ssid = "Yettel_1C9368";
+const char* password = "cT9zCSH7";
+
+int noviNiz[4];
+int stariNiz[4];
+String poruka;
+WiFiServer serverWIFI(1234);
+SMS_STS servo_1;
+
+void setup() {
+  Serial.begin(115200);
+  Serial2.begin(1000000, SERIAL_8N1, 16, 17);
+  servo_1.pSerial = &Serial2;
+  WiFiSetup();
+  delay(1000);
+
+
+}
+
+void loop() {
+  WiFiPrijem();
+  
+}
+
+void WiFiSetup(){
+// Pravi i proverava povezanost preko WiFi
+  WiFi.begin(ssid, password);
+  Serial.print("Povezuje se...");
+  while(WiFi.status() != WL_CONNECTED){
+    delay(500);
+    Serial.print(".");
+  }
+  Serial.println("WIFI Povezan!");
+  Serial.println(WiFi.localIP());
+  serverWIFI.begin();
+
+}
+
+void WiFiPrijem(){
+// Prima podatke iz MATLAB-a
+  WiFiClient client = serverWIFI.available();
+  if (client) {
+    while (client.connected()) {
+      if (client.available()) {
+        poruka = client.readStringUntil('\n');
+        Serial.println("Primljeno: " + poruka);
+        obradaNiza();
+        client.println("nastavi");//Handshake protocol
+      }
+    }
+    client.stop();
+  }
+
+}
+
+void obradaNiza(){
+//Od stringa pravi niz intigera
+  char* token = strtok((char*)poruka.c_str(), " ");
+
+  int i = 0;
+  while(token != NULL && i < 4){
+    noviNiz[i] = atoi(token);
+    token = strtok(NULL, " ");
+    i = i + 1;
+  }
+  
+}
+
+
+
+
+
+
+
+
+
+  
+
+
