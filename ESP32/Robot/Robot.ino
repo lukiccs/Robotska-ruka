@@ -6,7 +6,8 @@ const char* ssid = "Yettel_1C9368";
 const char* password = "cT9zCSH7";
 
 int noviNiz[4];
-int stariNiz[4];
+int stariNiz[4] = {0, 0, 0, 0};
+
 String poruka;
 WiFiServer serverWIFI(1234);
 SMS_STS servo_1;
@@ -22,8 +23,8 @@ void setup() {
 }
 
 void loop() {
+  // Serial.println("MRK");
   WiFiPrijem();
-  
 }
 
 void WiFiSetup(){
@@ -42,7 +43,7 @@ void WiFiSetup(){
 
 void WiFiPrijem(){
 // Prima podatke iz MATLAB-a
-  WiFiClient client = serverWIFI.available();
+  WiFiClient client = serverWIFI.accept();
   if (client) {
     while (client.connected()) {
       if (client.available()) {
@@ -58,17 +59,49 @@ void WiFiPrijem(){
 }
 
 void obradaNiza(){
-//Od stringa pravi niz intigera
-  char* token = strtok((char*)poruka.c_str(), " ");
-
+//Od stringa pravi niz intigera i radi provere
+  char* token = strtok((char*)poruka.c_str(), " ");//radi formatiranje podataka koji dolaze iz MATLAB
   int i = 0;
   while(token != NULL && i < 4){
     noviNiz[i] = atoi(token);
     token = strtok(NULL, " ");
     i = i + 1;
   }
-  
+
+  for(int j = 0; j < 4; j++){ //Provera najblizeg puta, da li je preko pola ili nije
+    int d = noviNiz[j] - stariNiz[j];
+    if (d > 2048) {
+      noviNiz[j] -= 4096;
+    }
+    else if (d < -2048) {
+      noviNiz[j] += 4096;
+    }
+    noviNiz[j] = (stariNiz[j] + (noviNiz[j] - stariNiz[j]) + 4096) % 4096;//normalizuje vrednost
+  }
+
+  for(int j = 0; j < 4; j++){ //ispis za proveru
+    Serial.print("stari: ");
+    Serial.print(stariNiz[j]);
+    Serial.print(" novi: ");
+    Serial.println(noviNiz[j]);
+  }
+
+  upisNaMotor(noviNiz[0]);
+
+  for(int j = 0; j < 4; j++){//samo prebacivanje radi dalje provere
+    stariNiz[j] = noviNiz[j];
+  }
 }
+
+void upisNaMotor(int vrednostPozicije){
+// Upisujem vrednosti na motor
+  servo_1.WritePosEx(1, vrednostPozicije, 7000);
+  delay(1000);
+}
+void citanjeSaMotora(){
+  //citam vrednosti brzine, napona, i opterecenja
+}
+
 
 
 
