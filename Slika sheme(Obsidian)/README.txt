@@ -1,0 +1,1 @@
+Sve komponente sheme ce biti update kako budem radio projekat. Kada se zavrsi izrada sheme brisem ovaj README fajl.
