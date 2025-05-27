@@ -38,7 +38,6 @@ void WiFiSetup(){
   Serial.println("WIFI Povezan!");
   Serial.println(WiFi.localIP());
   serverWIFI.begin();
-
 }
 
 void WiFiPrijem(){
@@ -55,7 +54,6 @@ void WiFiPrijem(){
     }
     client.stop();
   }
-
 }
 
 void obradaNiza(){
