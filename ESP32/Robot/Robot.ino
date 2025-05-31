@@ -8,6 +8,12 @@ const char* password = "cT9zCSH7";
 int noviNiz[4];
 int stariNiz[4] = {0, 0, 0, 0};
 
+int pozicija;
+int brzina;
+int napon;
+int opterecenje;
+
+
 String poruka;
 WiFiServer serverWIFI(1234);
 SMS_STS servo_1;
@@ -68,10 +74,10 @@ void obradaNiza(){
 
   for(int j = 0; j < 4; j++){ //Provera najblizeg puta, da li je preko pola ili nije
     int d = noviNiz[j] - stariNiz[j];
-    if (d > 2048) {
-      noviNiz[j] -= 4096;
-    }
-    else if (d < -2048) {
+    // if (d > 2048) {
+    //   noviNiz[j] -= 4096;
+    // }
+    if (d < -2048) {
       noviNiz[j] += 4096;
     }
     noviNiz[j] = (stariNiz[j] + (noviNiz[j] - stariNiz[j]) + 4096) % 4096;//normalizuje vrednost
@@ -81,10 +87,12 @@ void obradaNiza(){
     Serial.print("stari: ");
     Serial.print(stariNiz[j]);
     Serial.print(" novi: ");
-    Serial.println(noviNiz[j]);
+    Serial.print(noviNiz[j]);
+    Serial.print(" stvarna vrednost: : ");
+    Serial.println(citanjeSaMotoraPoz());
   }
 
-  upisNaMotor(noviNiz[0]);
+  upisNaMotor(noviNiz[3]);
 
   for(int j = 0; j < 4; j++){//samo prebacivanje radi dalje provere
     stariNiz[j] = noviNiz[j];
@@ -96,9 +104,14 @@ void upisNaMotor(int vrednostPozicije){
   servo_1.WritePosEx(1, vrednostPozicije, 7000);
   delay(1000);
 }
-void citanjeSaMotora(){
-  //citam vrednosti brzine, napona, i opterecenja
+int citanjeSaMotoraPoz(){
+  //citam vrednosti pozicije, brzine, napona, i opterecenja
+  pozicija = servo_1.ReadPos(1);
+  // Serial.println(pozicija);
+  return pozicija;
+
 }
+//OBAVEZNO PROVERITI PRELAZENJE PREKO NULE IMA NA GOOGLE
 
 
 
