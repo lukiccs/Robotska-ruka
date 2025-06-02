@@ -53,7 +53,7 @@ void WiFiPrijem(){
     while (client.connected()) {
       if (client.available()) {
         poruka = client.readStringUntil('\n');
-        Serial.println("Primljeno: " + poruka);
+        // Serial.println("Primljeno: " + poruka);
         obradaNiza();
         client.println("nastavi");//Handshake protocol
       }
@@ -89,7 +89,13 @@ void obradaNiza(){
     Serial.print(" novi: ");
     Serial.print(noviNiz[j]);
     Serial.print(" stvarna vrednost: : ");
-    Serial.println(citanjeSaMotoraPoz());
+    Serial.print(citanjeSaMotoraPoz());
+    Serial.print(" brzina: ");
+    Serial.print(citanjeSaMotoraBrzina());
+    Serial.print(" opterecenje: ");
+    Serial.print(citanjeSaMotoraOpt());
+    Serial.print(" napon: ");
+    Serial.println(citanjeSaMotoraNap());
   }
 
   upisNaMotor(noviNiz[3]);
@@ -102,15 +108,35 @@ void obradaNiza(){
 void upisNaMotor(int vrednostPozicije){
 // Upisujem vrednosti na motor
   servo_1.WritePosEx(1, vrednostPozicije, 7000);
-  delay(1000);
+  int cekanje = ((vrednostPozicije - citanjeSaMotoraPoz())/7000)*1000 + 100;//traje koliko traje kretanje
+  delay(cekanje);
 }
+
 int citanjeSaMotoraPoz(){
   //citam vrednosti pozicije, brzine, napona, i opterecenja
   pozicija = servo_1.ReadPos(1);
-  // Serial.println(pozicija);
   return pozicija;
-
 }
+
+int citanjeSaMotoraBrzina(){
+  //citam vrednosti pozicije, brzine, napona, i opterecenja
+  brzina = servo_1.ReadSpeed(1);
+  return brzina;
+}
+
+int citanjeSaMotoraOpt(){
+  //citam vrednosti pozicije, brzine, napona, i opterecenja
+  opterecenje = servo_1.ReadLoad(1);
+  return opterecenje;//opterecenje se dobija u opsegu od -1024 do 1024 gde je od 0 do 1024 cw, a ispod 0 ccw
+}
+
+int citanjeSaMotoraNap(){
+  //citam vrednosti pozicije, brzine, napona, i opterecenja
+  napon = servo_1.ReadVoltage(1);
+  return napon * 0.1;//mnozim sa 0.1 jer je svaka jedinica koja se cita 0.1V
+}
+
+//Dodati 4096 u zagradi gde se zadaje pozicija WritePosEx(1, x+4096....);
 //OBAVEZNO PROVERITI PRELAZENJE PREKO NULE IMA NA GOOGLE
 
 
