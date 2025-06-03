@@ -72,33 +72,22 @@ void obradaNiza(){
     i = i + 1;
   }
 
-  for(int j = 0; j < 4; j++){ //Provera najblizeg puta, da li je preko pola ili nije
-    int d = noviNiz[j] - stariNiz[j];
-    // if (d > 2048) {
-    //   noviNiz[j] -= 4096;
-    // }
-    if (d < -2048) {
-      noviNiz[j] += 4096;
-    }
-    noviNiz[j] = (stariNiz[j] + (noviNiz[j] - stariNiz[j]) + 4096) % 4096;//normalizuje vrednost
-  }
 
-  for(int j = 0; j < 4; j++){ //ispis za proveru
-    Serial.print("stari: ");
-    Serial.print(stariNiz[j]);
-    Serial.print(" novi: ");
-    Serial.print(noviNiz[j]);
-    Serial.print(" stvarna vrednost: : ");
-    Serial.print(citanjeSaMotoraPoz());
-    Serial.print(" brzina: ");
-    Serial.print(citanjeSaMotoraBrzina());
-    Serial.print(" opterecenje: ");
-    Serial.print(citanjeSaMotoraOpt());
-    Serial.print(" napon: ");
-    Serial.println(citanjeSaMotoraNap());
-  }
-
-  upisNaMotor(noviNiz[3]);
+  Serial.print("stari: ");
+  Serial.print(stariNiz[3]);
+  Serial.print(" novi: ");
+  Serial.print(noviNiz[3]);
+  Serial.print(" stvarna vrednost: : ");
+  Serial.print(citanjeSaMotoraPoz());
+  Serial.print(" brzina: ");
+  Serial.print(citanjeSaMotoraBrzina());
+  Serial.print(" opterecenje: ");
+  Serial.print(citanjeSaMotoraOpt());
+  Serial.print(" napon: ");
+  Serial.println(citanjeSaMotoraNap());
+  // }
+  upisNaMotor(0);
+  upisNaMotor(abs(noviNiz[3] - 2048));
 
   for(int j = 0; j < 4; j++){//samo prebacivanje radi dalje provere
     stariNiz[j] = noviNiz[j];
@@ -108,7 +97,7 @@ void obradaNiza(){
 void upisNaMotor(int vrednostPozicije){
 // Upisujem vrednosti na motor
   servo_1.WritePosEx(1, vrednostPozicije, 7000);
-  int cekanje = ((vrednostPozicije - citanjeSaMotoraPoz())/7000)*1000 + 100;//traje koliko traje kretanje
+  int cekanje = ((vrednostPozicije - citanjeSaMotoraPoz())/7000)*1000;//traje koliko traje kretanje
   delay(cekanje);
 }
 
@@ -135,19 +124,3 @@ int citanjeSaMotoraNap(){
   napon = servo_1.ReadVoltage(1);
   return napon * 0.1;//mnozim sa 0.1 jer je svaka jedinica koja se cita 0.1V
 }
-
-//Dodati 4096 u zagradi gde se zadaje pozicija WritePosEx(1, x+4096....);
-//OBAVEZNO PROVERITI PRELAZENJE PREKO NULE IMA NA GOOGLE
-
-
-
-
-
-
-
-
-
-
-  
-
-
