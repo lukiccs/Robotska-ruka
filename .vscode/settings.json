@@ -1,0 +1,6 @@
+{
+    "files.associations": {
+        "*.ino": "arduino-output",
+        "globalnepromenljive.h": "c"
+    }
+}
