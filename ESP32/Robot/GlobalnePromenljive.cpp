@@ -7,10 +7,12 @@ typedef unsigned short u16;
 String poruka;
 int noviNiz[4];
 int stariNiz[4] = {0, 0, 0, 0};
-int pozicija[4];
-int brzina[4];
-float napon[4];
-int opterecenje[4];
-u8 brojMotora = 4;
-u8 ACC[5] = {150, 150, 150, 150, 150};
+int pozicija[BROJ_MOTORA];
+int brzina[BROJ_MOTORA];
+float napon[BROJ_MOTORA];
+int opterecenje[BROJ_MOTORA];
+int ACC[5] = {0, 0, 0, 0, 0};
+int ID[4] = {1, 2, 3, 4}; // ID motora, moze da se menja u zavisnosti od konfiguracije
+
+
 SMS_STS servo;
