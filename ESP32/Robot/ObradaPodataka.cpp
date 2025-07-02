@@ -15,6 +15,10 @@ void obradaNiza(){
   }
   noviNiz[1] = abs(noviNiz[1] - 2048); // pomeren middle point pa mora da se sredi
   // upisNaMotor(abs(noviNiz[3] - 2048));
+  int zadataBrzina[4] = {1000, 1000, 1000, 1000}; //privremeno stavljama dok ne uradim PID
+  upisNaMotor(noviNiz, ID, zadataBrzina); // upisujem vrednosti na motor
+  // realnu brizinu treba izracunati na osnovu razlike u poziciji i vremenu iz PID
+  // max brzina ce se racunati na osnovu opterecenosti ruke da bih imao obrtnog momenta
 
   for(int j = 0; j < 4; j++){//samo prebacivanje radi dalje provere
     stariNiz[j] = noviNiz[j];
