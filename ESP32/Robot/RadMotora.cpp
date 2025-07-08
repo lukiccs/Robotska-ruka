@@ -2,6 +2,7 @@
 #include <Arduino.h>
 #include <SCServo.h>
 #include "GlobalnePromenljive.h"
+#include <algorithm>
 
 typedef unsigned char u8;
 typedef short s16;
@@ -26,9 +27,17 @@ void upisNaMotor(int vrednostPozicije[4], int ID[4], int zadataBrzina[4]) {
     }
 
     servo.SyncWritePosEx(ID_u8, BROJ_MOTORA, pozicija_s16, zadataBrzina_u16, ACC_u8);
-    // int cekanje = ((vrednostPozicije - servo.ReadPos(1)) / 7000) * 1000; // traje koliko traje kretanje
-    //mora se dodati racun za cekanje
-    delay(3000); // Ovo je samo primer, treba izracunati realno vreme cekanja
+    //racunam vreme cekanja na osnovu brzine i pozicije
+    int procitanePozicije[BROJ_MOTORA];//pravim niz koji cuva procitane pozicije
+    procitanePozicije[0] = servo.ReadPos(ID_u8[1]);
+    procitanePozicije[1] = servo.ReadPos(ID_u8[2]);
+
+    int minBrzina = *std::min_element(zadataBrzina, zadataBrzina + BROJ_MOTORA);
+    int maxPozicija = *std::max_element(vrednostPozicije, vrednostPozicije + BROJ_MOTORA);
+    int maxProcitanaPozicija = *std::max_element(procitanePozicije, procitanePozicije + BROJ_MOTORA);
+    int cekanje = ((maxPozicija - maxProcitanaPozicija) / minBrzina) * 1000; // traje koliko traje kretanje
+    //potrebne izmene nije dovoljno dobro za gledanje razlike u poziciji
+    delay(cekanje);
 }
 //odraditi return pointera na pocetak niza a onda raditi sa tim pointerom kroz stack
 int* citanjeSaMotoraPoz(int ID[BROJ_MOTORA]){
