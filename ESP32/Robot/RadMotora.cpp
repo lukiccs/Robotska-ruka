@@ -19,12 +19,16 @@ void upisNaMotor(int vrednostPozicije[4], int ID[4], int zadataBrzina[4]) {
         pozicija_s16[i] = (s16)vrednostPozicije[i];
         zadataBrzina_u16[i] = (u16)zadataBrzina[i];
         ACC_u8[i] = (u8)ACC[i];
+        Serial.println(ID_u8[i]);
+        Serial.println(pozicija_s16[i]);
+        Serial.println(zadataBrzina_u16[i]);
+        Serial.println(ACC_u8[i]);
     }
 
     servo.SyncWritePosEx(ID_u8, BROJ_MOTORA, pozicija_s16, zadataBrzina_u16, ACC_u8);
     // int cekanje = ((vrednostPozicije - servo.ReadPos(1)) / 7000) * 1000; // traje koliko traje kretanje
     //mora se dodati racun za cekanje
-    delay(1000); // Ovo je samo primer, treba izracunati realno vreme cekanja
+    delay(3000); // Ovo je samo primer, treba izracunati realno vreme cekanja
 }
 //odraditi return pointera na pocetak niza a onda raditi sa tim pointerom kroz stack
 int* citanjeSaMotoraPoz(int ID[BROJ_MOTORA]){
