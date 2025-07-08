@@ -27,7 +27,7 @@ void WiFiPrijem() {
     while (client.connected()) {
       if (client.available()) {
         String poruka = client.readStringUntil('\n');
-        obradaNiza();
+        obradaNiza(poruka);
         client.println("nastavi"); // Handshake protocol
       }
     }
