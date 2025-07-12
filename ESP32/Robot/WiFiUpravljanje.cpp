@@ -3,8 +3,12 @@
 #include "GlobalnePromenljive.h"
 #include "ObradaPodataka.h"
 
-const char* ssid = "Yettel_1C9368";
-const char* password = "cT9zCSH7";
+// const char* ssid = "Yettel_1C9368";//Beograd
+// const char* password = "cT9zCSH7";
+
+const char* ssid = "Luki _EXT";//Cacak
+const char* password = "26103130";
+
 WiFiServer serverWIFI(1234);
 
 void WiFiSetup() {

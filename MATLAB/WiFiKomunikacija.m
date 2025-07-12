@@ -1,7 +1,9 @@
 function [status] = WiFiKomunikacija(fajl)
 %SLANJESERIAL Salje podatke iz fajla u ESP32 preko WiFi 
 
-WifiKom = tcpclient("192.168.1.5", 1234);
+%WifiKom = tcpclient("192.168.1.5", 1234);%Beograd
+WifiKom = tcpclient("192.168.0.42", 1234);%Cacak
+
 
 podaci = load(fajl);
 
