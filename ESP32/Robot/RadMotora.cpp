@@ -32,14 +32,20 @@ void upisNaMotor(int vrednostPozicije[4], int ID[4], int zadataBrzina[4]) {
 
     servo.SyncWritePosEx(ID_u8, BROJ_MOTORA, pozicija_s16, zadataBrzina_u16, ACC_u8);
     //racunam vreme cekanja na osnovu brzine i pozicije
-    int procitanePozicije[BROJ_MOTORA];//pravim niz koji cuva procitane pozicije
-    procitanePozicije[0] = servo.ReadPos(ID_u8[1]);
-    procitanePozicije[1] = servo.ReadPos(ID_u8[2]);
 
+    int procitanePozicije[BROJ_MOTORA];//pravim niz koji cuva procitane pozicije
+    for (int i = 0; i < BROJ_MOTORA; i++) {
+      procitanePozicije[i] = servo.ReadPos(ID_u8[i]);
+    }
+    
+    int razlikePozicije[BROJ_MOTORA];//pravim niz koji cuva razlike pozicija
+    for (int i = 0; i < BROJ_MOTORA; i++) {
+      razlikePozicije[i] = abs(vrednostPozicije[i] - procitanePozicije[i]);
+    }
+    
     int minBrzina = *std::min_element(zadataBrzina, zadataBrzina + BROJ_MOTORA);
-    int maxPozicija = *std::max_element(vrednostPozicije, vrednostPozicije + BROJ_MOTORA);
-    int maxProcitanaPozicija = *std::max_element(procitanePozicije, procitanePozicije + BROJ_MOTORA);
-    int cekanje = ((maxPozicija - maxProcitanaPozicija) / minBrzina) * 1000; // traje koliko traje kretanje
+    int maxRazlikaPozicija = *std::max_element(razlikePozicije, razlikePozicije + BROJ_MOTORA);
+    int cekanje = (maxRazlikaPozicija / minBrzina) * 1000; // traje koliko traje kretanje
     //potrebne izmene nije dovoljno dobro za gledanje razlike u poziciji
     delay(cekanje);
 }
