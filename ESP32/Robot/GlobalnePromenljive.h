@@ -6,7 +6,7 @@
 typedef unsigned char u8;
 typedef short s16;
 typedef unsigned short u16;
-// #define BROJ_MOTORA 4
+
 const u8 BROJ_MOTORA = 2;
 
 //deklaracija globalnih promenljivih
