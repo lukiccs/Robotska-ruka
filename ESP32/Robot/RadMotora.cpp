@@ -20,9 +20,13 @@ void upisNaMotor(int vrednostPozicije[4], int ID[4], int zadataBrzina[4]) {
         pozicija_s16[i] = (s16)vrednostPozicije[i];
         zadataBrzina_u16[i] = (u16)zadataBrzina[i];
         ACC_u8[i] = (u8)ACC[i];
+        Serial.print("ID: ");
         Serial.println(ID_u8[i]);
+        Serial.print("Pozicija: ");
         Serial.println(pozicija_s16[i]);
+        Serial.print("Zadata brzina: ");
         Serial.println(zadataBrzina_u16[i]);
+        Serial.print("ACC: ");
         Serial.println(ACC_u8[i]);
     }
 
