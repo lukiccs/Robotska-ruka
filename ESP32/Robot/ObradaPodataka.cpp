@@ -29,3 +29,10 @@ void obradaNiza(String poruka){
     stariNiz[j] = noviNiz[j];
   }
 }
+
+float obradaOpterecenja(float opterecenje){
+  // Ova funkcija treba da obradi sirove vrednosti i da vrati obrtni moment
+  //moram da izvucem raw opterecenje i da vidim da ga skaliram prema max opterecenju(20kg/cm)
+  //ali zelim da posle to ubacim u proracun opterecenja i da tako dobijem preko struje, napona tj snage i opterecenja brzinu
+  //NACI STA ZNACI RAW OPTERECENJE
+}
