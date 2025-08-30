@@ -5,7 +5,7 @@ weights = [1 1 1 1 1 1];
 initialGuess = robot.homeConfiguration;
 
 pocetnjaPozicija = [0 0 0.48];
-zeljenjaPozicija = [0.1 0.2 0.3];
+zeljenjaPozicija = [0.15 0.2 0.3];
 n = 30;
 
 [xPutanja, yPutanja, zPutanja] = PravljenjeTrajektorije(pocetnjaPozicija, zeljenjaPozicija, n);

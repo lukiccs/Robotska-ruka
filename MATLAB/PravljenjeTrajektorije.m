@@ -1,4 +1,4 @@
-function [x_putanja, y_putanja, z_putanja] = Pravljenje_trajektorije(pocetna_poz,krajnja_poz, n)
+function [x_putanja, y_putanja, z_putanja] = PravljenjeTrajektorije(pocetna_poz,krajnja_poz, n)
 %PRAVLJENJE_TRAJEKTORIJE
 %   Za zadati pocetni i krajnji polozaj daje putanje za x, y, z sa n tacaka
 %   izmedju
