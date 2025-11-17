@@ -1,4 +1,5 @@
 clc;
+
 Tau = zeros(brojTacakaInterp, 4);
 Tau1 = zeros(brojTacakaInterp, 4);
 M = zeros(4, 4, brojTacakaInterp);

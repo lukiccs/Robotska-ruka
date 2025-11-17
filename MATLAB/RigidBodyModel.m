@@ -17,9 +17,9 @@ rotKucista = rigidBodyJoint('rotKucista', 'fixed');
 setFixedTransform(rotKucista, dh_parametri(1,:), 'dh');
 kuciste.Joint = rotKucista;
 addBody(robot, kuciste, 'base');
-kuciste.Mass = 0.16990036;
+kuciste.Mass = 0;
 kuciste.CenterOfMass = [0 0 0];
-kuciste.Inertia = [0.0001061875 0.0001061875 0.000212375 0 0 0];
+kuciste.Inertia = [0 0 0 0 0 0];
 
 %pravim rame i nosac za motor ramena
 nosacMotora1 = rigidBody('nosacMotora1');
@@ -27,9 +27,9 @@ rame = rigidBodyJoint('rame', 'revolute');
 setFixedTransform(rame, dh_parametri(2,:), 'dh');
 nosacMotora1.Joint = rame;
 addBody(robot, nosacMotora1, 'kuciste');
-nosacMotora1.Mass = 0;
+nosacMotora1.Mass = 0.16990036;
 nosacMotora1.CenterOfMass = [0 0 0];
-nosacMotora1.Inertia = [0 0 0 0 0 0];
+nosacMotora1.Inertia = [0.0001061875 0.0001061875 0.000212375 0 0 0];
 
 %pravim lakat i nadlakticu
 nadlaktica = rigidBody('nadlaktica');
