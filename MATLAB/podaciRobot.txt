@@ -1,0 +1,9 @@
+Mase:
+-kuciste = 0.08024kg + 0.02066036kg + motor = 0.16990036kg
+-nadlaktica = 0.085383751kg + motor = 0.154383751
+-podlaktica = 0.13129731kg
+-Saka = 0.02216277kg
+
+Momenti inercije:
+-kuciste(aproksimiram ga diskom debljine poklopca kucista,
+a precnika kucista, a u njegovu masu dodajem i masu nosaca motora) Iz = 0.5*m*R^2 = 0.000212375, Ix = Iy = 0.25*m*R^2 = 0.0001061875

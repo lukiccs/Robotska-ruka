@@ -4,17 +4,17 @@ ik = inverseKinematics('RigidBodyTree', robot, 'SolverAlgorithm','LevenbergMarqu
 weights = [1 1 1 1 1 1];
 initialGuess = robot.homeConfiguration;
 
-pocetnjaPozicija = [0 0 0.48];
+pocetnaPozicija = [0 0 0.48];
 zeljenjaPozicija = [0.15 0.2 0.3];
-n = 30;
+n = 10;
 
-[xPutanja, yPutanja, zPutanja] = PravljenjeTrajektorije(pocetnjaPozicija, zeljenjaPozicija, n);
+[xPutanja, yPutanja, zPutanja] = PravljenjeTrajektorije(pocetnaPozicija, zeljenjaPozicija, n);
 
 figure;
 for i = 1:n
     pozicija = [xPutanja(i), yPutanja(i), zPutanja(i)];
     transformMatrica = trvec2tform(pozicija);
-    [noviPolozaj, statusPolozaja] = ik('saka', transformMatrica, weights, initialGuess);
+    [noviPolozaj, statusPolozaja] = ik('endEff', transformMatrica, weights, initialGuess);
     upisDatoteka(noviPolozaj, 'podaci.txt');
     initialGuess = noviPolozaj;
     
@@ -22,12 +22,12 @@ for i = 1:n
     if noviPolozaj(2) < min(lakat.PositionLimits) && noviPolozaj(2) > max(lakat.PositionLimits)
         disp('Položaj nije moguće postići.\n');
     end
-    if noviPolozaj(3) < min(zglob_sake.PositionLimits) && noviPolozaj(4) > max(zglob_sake.PositionLimits)
+    if noviPolozaj(3) < min(zglobSake.PositionLimits) && noviPolozaj(4) > max(zglobSake.PositionLimits)
         disp('Položaj nije moguće postići.\n');
     end
     %%%ovaj kod je samo peovera za sebe
 
-    stvarniPolozaj = getTransform(robot, noviPolozaj, 'saka');
+    stvarniPolozaj = getTransform(robot, noviPolozaj, 'endEff');
     stvarneKoordinate  = stvarniPolozaj(1:3, 4);
     if statusPolozaja.Status == "success"
         disp('Savrseno');
@@ -42,7 +42,7 @@ for i = 1:n
         drawnow;
         %pause(0.03);
     else
-        disp('kurac');
+        disp('Ne moze!');
     end
     
 end

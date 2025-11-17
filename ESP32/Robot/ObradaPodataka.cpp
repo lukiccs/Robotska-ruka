@@ -15,7 +15,7 @@ void obradaNiza(String poruka){
   }
   noviNiz[2] = abs(noviNiz[2] - 2048); // pomeren middle point pa mora da se sredi
   // upisNaMotor(abs(noviNiz[3] - 2048));
-  int zadataBrzina[4] = {1000, 1000, 1000, 1000}; //privremeno stavljama dok ne uradim PID
+  int zadataBrzina[4] = {7000, 7000, 7000, 7000}; //privremeno stavljama dok ne uradim PID
 
   upisNaMotor(noviNiz, ID, zadataBrzina); // upisujem vrednosti na motor
   // realnu brizinu treba izracunati na osnovu razlike u poziciji i vremenu iz PID
@@ -26,10 +26,10 @@ void obradaNiza(String poruka){
   }
 }
 
-float obradaOpterecenja(float opterecenje){
+// float obradaOpterecenja(float opterecenje){
   
-  // Ova funkcija treba da obradi sirove vrednosti i da vrati obrtni moment
-  //moram da izvucem raw opterecenje i da vidim da ga skaliram prema max opterecenju(20kg/cm)
-  //ali zelim da posle to ubacim u proracun opterecenja i da tako dobijem preko struje, napona tj snage i opterecenja brzinu
-  //servo daje opterecenje u opsegu od -2048 do 2048(ako je opterecenje negativno onda je motor zapravo rasterecen)
-}
+//   // Ova funkcija treba da obradi sirove vrednosti i da vrati obrtni moment
+//   //moram da izvucem raw opterecenje i da vidim da ga skaliram prema max opterecenju(20kg/cm)
+//   //ali zelim da posle to ubacim u proracun opterecenja i da tako dobijem preko struje, napona tj snage i opterecenja brzinu
+//   //servo daje opterecenje u opsegu od -2048 do 2048(ako je opterecenje negativno onda je motor zapravo rasterecen)
+// }
